@@ -18,5 +18,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - uses: opentofu/setup-opentofu@v1
-      - run: tofu init -backend-config="bucket=${{ secrets.S3_BUCKET }}"
+      - run: tofu init -backend-config="bucket=${{ secrets.S3_BUCKET }}" -backend-config="key='free-domains/key.tfstate'"
       - run: tofu apply -var='zones=${{ vars.ZONES }}' -auto-approve
