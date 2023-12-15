@@ -6,7 +6,6 @@ on:
   
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  AWS_ENDPOINT_URL_S3: ${{ secrets.AWS_ENDPOINT_URL_S3 }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   
@@ -17,5 +16,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - uses: opentofu/setup-opentofu@v1
-      - run: tofu init -backend-config="bucket=${{ secrets.S3_BUCKET }}" -backend-config="key='free-domains/key.tfstate'"
+      - run: tofu init -backend-config="bucket=${{ secrets.S3_BUCKET }}" -backend-config="region='us-east-1'" -backend-config="endpoint='${{ secrets.AWS_ENDPOINT_URL_S3 }}'" -backend-config="key='free-domains/key.tfstate'"
       - run: tofu apply -var='zones=${{ vars.ZONES }}' -auto-approve
